@@ -62,7 +62,7 @@ def test_create_payload():
     payload.add_objects([], SELECTIVE_ATTRIBUTE_DISCLOSURE)
     payload.add_arrays([], SELECTIVE_ARRAY_DISCLOSURE)
 
-    _payload = payload.create(hash_func='sha-256')
+    _payload = payload.construct(hash_func='sha-256')
 
     assert set(_payload.keys()) == {'_sd', '_sd_alg', 'address', 'exp', 'foo',
                                     'iat', 'iss', 'nationalities', 'sub', 'team'}
