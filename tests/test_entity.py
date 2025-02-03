@@ -92,8 +92,7 @@ def test_issuer_2():
         iss=ALICE,
         sign_alg="ES256",
         lifetime=600,
-        objective_disclosure={"": {}},
-        array_disclosure=SELECTIVE_ARRAY_DISCLOSURES
+        array_disclosure=SELECTIVE_ARRAY_DISCLOSURES,
     )
 
     payload = {"sub": "sub", "aud": BOB}
@@ -102,7 +101,7 @@ def test_issuer_2():
     # msg is what is sent to the receiver
 
     _part = _msg.split("~")
-    assert len(_part) == 12
+    assert len(_part) == 6  # JWT~US~DE~A~B~''
 
     # deal with the signed JSON Web Token
     _jwt = factory(_part[0])
@@ -110,7 +109,7 @@ def test_issuer_2():
     assert _jwt.jwt.headers['alg'] == "ES256"
 
     _msg = _jwt.jwt.payload()
-    assert "_sd" in _msg
+    assert "_sd" not in _msg
     assert "_sd_alg" in _msg
     assert "nationalities" in _msg and len(_msg["nationalities"]) == 2
 
